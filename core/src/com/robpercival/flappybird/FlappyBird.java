@@ -2,15 +2,19 @@ package com.robpercival.flappybird;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Circle;
 
 import java.util.Random;
 
 public class FlappyBird extends ApplicationAdapter {
     SpriteBatch batch;
     Texture background;
-
+    ShapeRenderer shapeRenderer;
+    Circle birdCircle;
 
     Texture[] birds;
     int flapState = 0;
@@ -43,6 +47,8 @@ public class FlappyBird extends ApplicationAdapter {
         birds[1] = new Texture("bird2.png");
         birdY = Gdx.graphics.getHeight() / 2 - birds[flapState].getHeight() / 2;
 
+        shapeRenderer = new ShapeRenderer();
+        birdCircle = new Circle();
         topTube = new Texture("toptube.png");
         bottomTube = new Texture("bottomtube.png");
 
@@ -100,5 +106,11 @@ public class FlappyBird extends ApplicationAdapter {
 
         batch.draw(birds[flapState], Gdx.graphics.getWidth() / 2 - birds[flapState].getWidth() / 2, birdY);
         batch.end();
+        birdCircle.set(Gdx.graphics.getWidth() / 2, birdY + birds[flapState].getHeight() / 2, birds[flapState].getWidth() / 2);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(Color.RED);
+
+        shapeRenderer.circle(birdCircle.x, birdCircle.y, birdCircle.radius);
+        shapeRenderer.end();
     }
 }
